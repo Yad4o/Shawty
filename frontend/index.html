@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant Control Panel</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+        }
+        .container {
+            background: #1e293b;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 600px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+        .status-dot {
+            height: 12px;
+            width: 12px;
+            background-color: #ef4444; /* red meaning off right now */
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            box-shadow: 0 0 8px #ef4444;
+        }
+        .logs {
+            background: #000;
+            height: 250px;
+            overflow-y: auto;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: monospace;
+            color: #10b981;
+            margin-bottom: 1rem;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+        input {
+            flex: 1;
+            padding: 0.8rem;
+            border-radius: 6px;
+            border: 1px solid #475569;
+            background: #0f172a;
+            color: white;
+            font-size: 1rem;
+        }
+        button {
+            padding: 0.8rem 1.5rem;
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        button:hover { background-color: #2563eb; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2>🧠 Assistant Testing Dashboard</h2>
+        <div>
+            <span class="status-dot"></span>
+            <span>Voice Status: Idle</span>
+        </div>
+    </div>
+
+    <p style="color: #94a3b8; font-size: 0.9rem;">
+        Use this terminal to type commands instead of speaking, to test your LLM parsing before we go fully invisible!
+    </p>
+
+    <!-- Console Logging Window -->
+    <div class="logs" id="logs">
+        > Assistant Dashboard Initialized...<br>
+        > Send a test command below...<br>
+    </div>
+
+    <!-- Text Input Simulator -->
+    <div class="input-group">
+        <input type="text" id="cmdInput" placeholder="e.g. 'Open chrome and search python'" autocomplete="off" onkeypress="handleEnter(event)">
+        <button onclick="sendCommand()">Send Test</button>
+    </div>
+</div>
+
+<script>
+    function logMessage(msg, type='info') {
+        const logs = document.getElementById('logs');
+        let color = type === 'user' ? '#60a5fa' : '#10b981';
+        logs.innerHTML += `<span style="color: ${color}">> ${msg}</span><br>`;
+        logs.scrollTop = logs.scrollHeight;
+    }
+
+    function handleEnter(e) {
+        if(e.key === 'Enter') sendCommand();
+    }
+
+    async function sendCommand() {
+        const input = document.getElementById('cmdInput');
+        const text = input.value.trim();
+        if(!text) return;
+        
+        logMessage(`You: ${text}`, 'user');
+        input.value = '';
+
+        try {
+            const response = await fetch('/api/test_command', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ text: text })
+            });
+            const data = await response.json();
+            
+            // Format simulated response beautifully
+            logMessage(`Assistant Received: ${data.received}`);
+            
+            // In the future data.simulated_action will be your real JSON object!
+        } catch (err) {
+            logMessage(`[Error]: Backend not responding. Is FastAPI running?`, 'error');
+        }
+    }
+</script>
+
+</body>
+</html>
