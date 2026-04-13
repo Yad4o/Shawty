@@ -1,0 +1,26 @@
+# Virtual Environments
+venv/
+env/
+.env/
+
+# Environment Variables
+.env
+
+# Python Cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Project Logs
+*.log
+assistant.log
