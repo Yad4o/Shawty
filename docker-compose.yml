@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  omclaw-api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.api
+    container_name: omclaw-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app/backend
+      - ./workspace:/workspace
+      - /var/run/docker.sock:/var/run/docker.sock  # DinD for sandbox
+    environment:
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+    env_file:
+      - .env
+    depends_on:
+      - omclaw-sandbox-builder
+    networks:
+      - omclaw-net
+
+  omclaw-sandbox-builder:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.sandbox
+    image: omclaw-sandbox:latest
+    command: echo "Sandbox image built"
+
+networks:
+  omclaw-net:
+    driver: bridge
+
+volumes:
+  workspace:
