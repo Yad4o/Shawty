@@ -16,6 +16,10 @@
   <img src="https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square"/>
 </p>
 
+<p align="center">
+  <strong>🚧 Status: Active Development</strong> — agent loop, tool layer, and FastAPI scaffolding underway.
+</p>
+
 ---
 
 ## What is OmClaw?
@@ -145,14 +149,14 @@ uvicorn api.main:app --reload
 
 | Phase | Scope | Status |
 |---|---|---|
-| **Phase 1** | Chat, tool calling, file tools | 🔲 Not started |
-| **Phase 2** | Docker sandbox | 🔲 Not started |
-| **Phase 3** | Git operations | 🔲 Not started |
-| **Phase 4** | GitHub integration | 🔲 Not started |
-| **Phase 5** | Memory & goal tracking | 🔲 Not started |
-| **Phase 6** | Repo indexing + semantic search | 🔲 Not started |
-| **Phase 7** | Browser automation | 🔲 Not started |
-| **Phase 8** | Self-healing coding loop | 🔲 Not started |
+| **Phase 1** | Chat, tool calling, file tools | 🔲 Planned |
+| **Phase 2** | Docker sandbox | 🔲 Planned |
+| **Phase 3** | Git operations | 🔲 Planned |
+| **Phase 4** | GitHub integration | 🔲 Planned |
+| **Phase 5** | Memory & goal tracking | 🔲 Planned |
+| **Phase 6** | Repo indexing + semantic search | 🔲 Planned |
+| **Phase 7** | Browser automation | 🔲 Planned |
+| **Phase 8** | Self-healing coding loop | 🔲 Planned |
 
 Each phase is implemented one at a time. See [`docs/ROADMAP.md`](docs/ROADMAP.md) for detailed breakdown.
 
